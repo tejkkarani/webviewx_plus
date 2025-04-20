@@ -7,8 +7,8 @@ import 'helpers.dart';
 
 class WebViewXPage extends StatefulWidget {
   const WebViewXPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _WebViewXPageState createState() => _WebViewXPageState();
@@ -39,40 +39,43 @@ class _WebViewXPageState extends State<WebViewXPage> {
       appBar: AppBar(
         title: const Text('WebViewX_Plus Page'),
       ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: <Widget>[
-              buildSpace(direction: Axis.vertical, amount: 10.0, flex: false),
-              Container(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: Text(
-                  'Play around with the buttons below',
-                  style: Theme.of(context).textTheme.titleLarge,
+      body: SafeArea(
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                buildSpace(direction: Axis.vertical, amount: 10.0, flex: false),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Text(
+                    'Play around with the buttons below',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                 ),
-              ),
-              buildSpace(direction: Axis.vertical, amount: 10.0, flex: false),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.2),
+                buildSpace(direction: Axis.vertical, amount: 10.0, flex: false),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0.2),
+                  ),
+                  child: _buildWebViewX(),
                 ),
-                child: _buildWebViewX(),
-              ),
-              Expanded(
-                child: Scrollbar(
-                  controller: scrollController,
-                  thumbVisibility: true,
-                  child: SizedBox(
-                    width: min(screenSize.width * 0.8, 512),
-                    child: ListView(
-                      controller: scrollController,
-                      children: _buildButtons(),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Scrollbar(
+                    controller: scrollController,
+                    thumbVisibility: true,
+                    child: SizedBox(
+                      width: min(screenSize.width * 0.8, 512),
+                      child: ListView(
+                        controller: scrollController,
+                        children: _buildButtons(),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -303,6 +306,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
         text: 'Show current webview content',
         onTap: _getWebviewContent,
       ),
+      const SizedBox(height: 20, width: double.infinity)
     ];
   }
 }

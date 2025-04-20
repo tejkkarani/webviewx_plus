@@ -1,5 +1,6 @@
 build/
 example/.dart_tool/
+example/android/app/.cxx
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies

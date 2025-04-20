@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:web/web.dart' as web;
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:web/web.dart' as web;
 import 'package:webviewx_plus/src/controller/impl/web.dart';
 import 'package:webviewx_plus/src/controller/interface.dart' as ctrl_interface;
 import 'package:webviewx_plus/src/utils/constants.dart';
@@ -364,7 +364,7 @@ class _WebViewXState extends State<WebViewX> {
           jsContent: widget.jsContent,
           windowDisambiguator: iframeViewType,
           forWeb: true,
-        );
+        ) as JSAny;
         break;
       case SourceType.url:
       case SourceType.urlBypass:
@@ -374,7 +374,7 @@ class _WebViewXState extends State<WebViewX> {
             jsContent: widget.jsContent,
             windowDisambiguator: iframeViewType,
             forWeb: true,
-          );
+          ) as JSAny;
           break;
         }
 
@@ -533,7 +533,7 @@ class _WebViewXState extends State<WebViewX> {
       jsContent: widget.jsContent,
       windowDisambiguator: iframeViewType,
       forWeb: true,
-    );
+    ) as JSAny;
   }
 
   void _debugLog(String text) {
