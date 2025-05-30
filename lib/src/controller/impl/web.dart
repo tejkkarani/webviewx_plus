@@ -1,4 +1,5 @@
 import 'dart:async' show Future;
+import 'dart:convert';
 import 'dart:js_interop' as js;
 import 'dart:js_interop_unsafe';
 
@@ -128,7 +129,30 @@ class WebViewXController extends ChangeNotifier
     String name,
     List<dynamic> params,
   ) {
-    final result = connector.callMethod(name.toJS, params.toJSBox);
+    if (params.isEmpty) {
+      return Future<dynamic>.value(
+        connector.callMethod(name.toJS),
+      );
+    }
+
+    final jsParams = <js.JSAny>[]; // Create an empty JSArray
+    for (var param in params) {
+      if (param is String) {
+        jsParams.add(param.toJS);
+      } else if (param is num) {
+        jsParams.add(param.toJS);
+      } else if (param is bool) {
+        jsParams.add(param.toJS);
+      } else if (param is Map || param is List) {
+        jsParams.add(param.toJSBox);
+      } else {
+        // Convert complex objects to JSON-serializable form
+        jsParams.add(jsonEncode(param).toJS);
+      }
+    }
+
+    final result = connector.callMethod(name.toJS, jsParams.toJS);
+
     return Future<dynamic>.value(result);
   }
 
@@ -144,10 +168,16 @@ class WebViewXController extends ChangeNotifier
     String rawJavascript, {
     bool inGlobalContext = false,
   }) {
+    final jsParams = <js.JSAny>[];
+    jsParams.add(rawJavascript.toJS);
+
     final result = (inGlobalContext ? js.globalContext : connector).callMethod(
       'eval'.toJS,
-      [rawJavascript].toJSBox,
+      jsParams.toJS,
     );
+
+    print(result);
+
     return Future<dynamic>.value(result);
   }
 

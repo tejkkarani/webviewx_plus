@@ -105,6 +105,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
               "function testPlatformSpecificMethod(msg) { TestDartCallback.postMessage('Mobile callback says: ' + msg) }",
         ),
       },
+      javascriptMode: JavascriptMode.unrestricted,
       dartCallBacks: {
         DartCallback(
           name: 'TestDartCallback',
@@ -211,6 +212,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
       await webviewController
           .callJsMethod('testPlatformSpecificMethod', ['Hi']);
     } catch (e) {
+      print(e);
       showAlertDialog(
         executeJsErrorMessage,
         context,
